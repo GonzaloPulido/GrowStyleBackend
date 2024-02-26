@@ -1,5 +1,5 @@
 class UsuarioModel {
-    constructor(rol, nombre, apellidos, telefono, email, contrasenya, calle = '', numero = '', ciudad = '', codigo_postal = '', provincia = '') {
+    constructor(rol = 0, nombre, apellidos, telefono, email, contrasenya, calle = '', numero = '', ciudad = '', codigo_postal = '', provincia = '') {
         this.rol = rol;
         this.nombre = nombre;
         this.apellidos = apellidos;

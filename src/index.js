@@ -5,7 +5,7 @@ const cors = require('cors')
 const connectionBDImages = require('./config/mongoose')
 const mariaDBConnection = require('./config/mariaDB')
 connectionBDImages()
-mariaDBConnection()
+//mariaDBConnection()
 
 app.use(cors())
 app.use(express.json());

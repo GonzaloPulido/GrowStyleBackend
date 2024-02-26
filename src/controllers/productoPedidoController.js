@@ -5,6 +5,7 @@ exports.getAllProductoPedido = async (req,res) => {
         const conn = await mariaDBConnection();
         const query = "SELECT * FROM productoPedido";
         const rows = await conn.query(query);
+        conn.end();
         res.status(200).json(rows);
         } catch (error) {
             console.log(error)
@@ -21,6 +22,7 @@ exports.getProductoPedidoByPedidoId = async (req, res) => {
         if (rows.length === 0) { 
             return res.status(404).json({ message: "Producto pedido no encontrado" });
         }
+        conn.end();
         res.status(200).json(rows[0]); 
     } catch (error) {
         console.log(error);
@@ -34,6 +36,7 @@ exports.createProductoPedido = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "INSERT INTO productoPedido ( cantidad, talla, id_producto, id_pedido) VALUES (?, ?, ?, ?)";
         await conn.query(query, [cantidad, talla, id_producto, id_pedido]);
+        conn.end();
         res.status(201).json({ message: "Producto Pedido creado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -48,6 +51,7 @@ exports.updateProductoPedido = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "UPDATE productoPedido SET cantidad = ?, talla = ?, id_producto = ?, id_pedido = ? WHERE id = ?";
         await conn.query(query, [cantidad, talla, id_producto, id_pedido, id]);
+        conn.end();
         res.status(200).json({ message: "Producto pedido actualizado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -61,6 +65,7 @@ exports.deleteProductoPedido = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "DELETE FROM productoPedido WHERE id = ?";
         await conn.query(query, [id]);
+        conn.end();
         res.status(200).json({ message: "Producto pedido eliminado exitosamente" });
     } catch (error) {
         console.log(error);

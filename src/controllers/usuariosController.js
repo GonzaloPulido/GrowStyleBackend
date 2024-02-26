@@ -5,6 +5,7 @@ exports.getAllUsers = async (req,res) => {
         const conn = await mariaDBConnection();
         const query = "SELECT * FROM usuarios";
         const rows = await conn.query(query);
+        conn.end();
         res.status(200).json(rows);
         } catch (error) {
             console.log(error)
@@ -21,6 +22,7 @@ exports.getUserById = async (req, res) => {
         if (rows.length === 0) { 
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
+        conn.end();
         res.status(200).json(rows[0]); 
     } catch (error) {
         console.log(error);
@@ -34,6 +36,7 @@ exports.createUser = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "INSERT INTO usuarios (rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         await conn.query(query, [rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia]);
+        conn.end();
         res.status(201).json({ message: "Usuario creado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -48,6 +51,7 @@ exports.updateUser = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "UPDATE usuarios SET rol = ?, nombre = ?, apellidos = ?, telefono = ?, email = ?, contrasenya = ?, calle = ?, numero = ?, ciudad = ?, codigo_postal = ?, provincia = ? WHERE id = ?";
         await conn.query(query, [rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia, id]);
+        conn.end();
         res.status(200).json({ message: "Usuario actualizado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -61,6 +65,7 @@ exports.deleteUser = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "DELETE FROM usuarios WHERE id = ?";
         await conn.query(query, [id]);
+        conn.end();
         res.status(200).json({ message: "Usuario eliminado exitosamente" });
     } catch (error) {
         console.log(error);

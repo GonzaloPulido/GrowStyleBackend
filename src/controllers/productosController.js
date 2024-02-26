@@ -5,6 +5,7 @@ exports.getAllProducts = async (req,res) => {
         const conn = await mariaDBConnection();
         const query = "SELECT * FROM producto";
         const rows = await conn.query(query);
+        conn.end();
         res.status(200).json(rows);
         } catch (error) {
             console.log(error)
@@ -20,6 +21,7 @@ exports.getProductById = async (req, res) => {
         if (rows.length === 0) { 
             return res.status(404).json({ message: "Producto no encontrado" });
         }
+        conn.end();
         res.status(200).json(rows[0]); 
     } catch (error) {
         console.log(error);
@@ -33,6 +35,7 @@ exports.createProduct = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "INSERT INTO producto (nombre, precio, precio_descuento, color, imagen, talla_xs, talla_s, talla_m, talla_l, talla_xl, talla_xxl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         await conn.query(query, [nombre, precio, precio_descuento, color, imagen, talla_xs, talla_s, talla_m, talla_l, talla_xl, talla_xxl]);
+        conn.end();
         res.status(201).json({ message: "Producto creado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -47,6 +50,7 @@ exports.updateProduct = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "UPDATE producto SET  nombre = ?, precio = ?, precio_descuento = ?, color = ?, imagen = ?, talla_xs = ?, talla_s = ?, talla_m = ?, talla_l = ?, talla_xl = ?, talla_xxl = ? WHERE id = ?";
         await conn.query(query, [nombre, precio, precio_descuento, color, imagen, talla_xs, talla_s, talla_m, talla_l, talla_xl, talla_xxl, id]);
+        conn.end();
         res.status(200).json({ message: "Producto actualizado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -60,6 +64,7 @@ exports.deleteProduct = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "DELETE FROM producto WHERE id = ?";
         await conn.query(query, [id]);
+        conn.end();
         res.status(200).json({ message: "Producto eliminado exitosamente" });
     } catch (error) {
         console.log(error);

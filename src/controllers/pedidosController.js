@@ -5,6 +5,7 @@ exports.getAllPedidos = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "SELECT * FROM pedidos";
         const rows = await conn.query(query);
+        conn.end();
         res.status(200).json(rows);
     } catch (error) {
         console.log(error);
@@ -21,6 +22,7 @@ exports.getPedidosByUserId = async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ message: "No se encontraron pedidos para este usuario" });
         }
+        conn.end();
         res.status(200).json(rows);
     } catch (error) {
         console.log(error);
@@ -34,6 +36,7 @@ exports.createPedido = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "INSERT INTO pedidos (id_usuario, status, fecha) VALUES (?, ?, ?)";
         await conn.query(query, [id_usuario, status, fecha]);
+        conn.end();
         res.status(201).json({ message: "Pedido creado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -51,6 +54,7 @@ exports.updatePedidoStatus = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "UPDATE pedidos SET status = ? WHERE id = ?";
         await conn.query(query, [status, id]);
+        conn.end();
         res.status(200).json({ message: "Estado del pedido actualizado exitosamente" });
     } catch (error) {
         console.log(error);
@@ -65,6 +69,7 @@ exports.deletePedido = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "DELETE FROM pedidos WHERE id = ?";
         await conn.query(query, [id]);
+        conn.end();
         res.status(200).json({ message: "Pedido eliminado exitosamente" });
     } catch (error) {
         console.log(error);
