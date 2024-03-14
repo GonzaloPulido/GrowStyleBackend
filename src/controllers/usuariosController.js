@@ -35,9 +35,9 @@ exports.createUser = async (req, res) => {
         const { rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia } = req.body;
         const conn = await mariaDBConnection();
         const query = "INSERT INTO usuarios (rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        await conn.query(query, [rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia]);
+        const returnedQuery = await conn.query(query, [rol, nombre, apellidos, telefono, email, contrasenya, calle, numero, ciudad, codigo_postal, provincia]);
         conn.end();
-        res.status(201).json({ message: "Usuario creado exitosamente" });
+        res.status(201).json({ message: "Usuario creado exitosamente", id: Number(returnedQuery.insertId) });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Error al crear usuario" });

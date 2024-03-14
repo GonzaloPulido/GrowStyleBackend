@@ -36,7 +36,6 @@ exports.createFavorito = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "INSERT INTO favorito ( id_usuario, id_producto) VALUES (?, ?)";
         const returnedQuery = await conn.query(query, [id_usuario, id_producto]);
-        console.log("Nuevo objeto",returnedQuery.insertId);
         conn.end();
         res.status(201).json({ message: "Favorito creado exitosamente", id: Number(returnedQuery.insertId)});
     } catch (error) {
