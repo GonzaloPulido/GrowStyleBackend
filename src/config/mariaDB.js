@@ -7,7 +7,7 @@ const pool = mariadb.createPool({
     user: 'root',
     password: 'growstyle1234',
     database: 'growstyleDB',
-  })
+})
 
   const mariaDBConnection = async () => {
     try {
