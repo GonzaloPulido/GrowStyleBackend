@@ -19,9 +19,9 @@ exports.getFavoritosByUserId = async (req, res) => {
         const conn = await mariaDBConnection();
         const query = "SELECT * FROM favorito WHERE id_usuario = ?"; 
         const rows = await conn.query(query, [id]); 
-        if (rows.length === 0) { 
-            return res.status(404).json({ message: "Favoritos no encontrados para este usuario" });
-        }
+        /* if (rows.length === 0) { 
+            return res.status(200).json({ message: "Favoritos no encontrados para este usuario" });
+        } */
         conn.end();
         res.status(200).json(rows); // Devuelve todos los favoritos encontrados
     } catch (error) {
