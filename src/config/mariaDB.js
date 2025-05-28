@@ -1,13 +1,23 @@
 const mariadb = require('mariadb')
 
-// Configuración de MariaDB
+// Configuración de MariaDB (LOCAL)
+
+// const pool = mariadb.createPool({
+//     host: 'localhost',
+//     port: 3306,
+//     user: 'root',
+//     password: 'growstyle1234',
+//     database: 'growstyleDB',
+// })
+
 const pool = mariadb.createPool({
-    host: '172.17.0.2',
-    port: '3306',
-    user: 'root',
-    password: 'growstyle1234',
-    database: 'growstyleDB',
+     host: 'switchyard.proxy.rlwy.net',
+     port: 44878,
+     user: 'root',
+     password: 'PtDIueolQQuTNhuKaCIZOmKoofCuzrAv',
+     database: 'railway',
 })
+
 
   const mariaDBConnection = async () => {
     try {
